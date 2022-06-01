@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!--label for="name">User: </label>
+  <input id="name" type="text" [formControl]="name">
+  <br>
+  <label for="pass">Pass: </label>
+  <input id="pass" type="password" [formControl]="pass">
+  <button type="button" (click)="updateName()">Update</button-->
+
+
+  <form [formGroup]="loginForm" (ngSubmit)="authenticate(username.value,password.value)" novalidate>
+    <ion-item lines="full">
+      <ion-label position="floating">username</ion-label>
+      <ion-input formControlName="username" id="username" type="text" #username required></ion-input>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label position="floating">password</ion-label>
+      <ion-input formControlName="password" id="password" type="password" #password required></ion-input>
+    </ion-item>
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="secondary" expand="block">Submit</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+
+
+
+</ion-content>

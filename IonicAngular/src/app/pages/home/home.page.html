@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Welcome, {{username}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button (click)="logout()">LOGOUT</ion-button>
+  <br>
+  <ion-button color="secondary" (click)="taskAssigned()">My Tasks</ion-button>
+  <ion-button color="secondary" (click)="taskUnassigned()">Unassigned Tasks</ion-button>
+  <ion-button color="secondary" (click)="process()">Available Processes</ion-button>
+
+</ion-content>

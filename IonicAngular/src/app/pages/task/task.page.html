@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>task</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <h3 id="processName">
+    {{task?.name}}
+  </h3>
+
+  <form [formGroup]="form">
+    <!--for string input-->
+    <div *ngFor="let input of variables">
+      <div *ngIf="input.type!='Boolean'">
+    <ion-item lines="full" >
+      <ion-label position="floating" >{{input.name}}</ion-label>
+      <ion-input [formControlName]="input.name" type="input.type" >{{input.value}}</ion-input>
+    </ion-item></div></div>
+    <!--for checkboxes-->
+    <div *ngFor="let input of variables">
+      <div *ngIf="input.type=='Boolean'">
+    <ion-item lines="full" >
+      <ion-label position="floating" >{{input.name}}</ion-label>
+      <ion-checkbox color="primary"></ion-checkbox>
+    </ion-item></div></div>
+    <br>
+    <ion-button type="submit" expand="block" color="secondary" (click)="submit()" *ngIf="status == 'assigned'">Submit</ion-button>
+    <ion-button type="submit" expand="block" color="danger" (click)="unclaim()" *ngIf="status == 'assigned'">Unclaim</ion-button>
+    <ion-button type="submit" expand="block" color="secondary" (click)="claim()" *ngIf="status != 'assigned'">Claim</ion-button>
+  </form>
+
+
+</ion-content>

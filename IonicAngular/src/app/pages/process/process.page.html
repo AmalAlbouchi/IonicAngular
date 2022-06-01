@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>process</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <h3 id="processName">
+    {{process?.name}}
+  </h3>
+
+  <form [formGroup]="form">
+    <ion-item *ngFor="let input of variables" lines="full">
+      <ion-label position="floating">{{input.name}}</ion-label>
+      <ion-input [formControlName]="input.name" type="input.type" required></ion-input>
+    </ion-item>
+    <br>
+    <ion-button type="submit" expand="block" color="secondary" (click)="submit()">Submit</ion-button>
+  </form>
+
+
+  
+</ion-content>
