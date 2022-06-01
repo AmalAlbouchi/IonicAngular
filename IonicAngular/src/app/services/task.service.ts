@@ -81,4 +81,9 @@ export class TaskService {
     {
       return this.http.post<any>(`${baseUrl}/task/${id}/unclaim`,data,this.header(username,password))
     }
+
+    public submitForm(username : string, password : string, id : string, data : any) : Observable<any>
+    {
+      return this.http.post<any>(`${baseUrl}/task/${id}/submit-form` , data , this.header(username,password))
+    }
 }

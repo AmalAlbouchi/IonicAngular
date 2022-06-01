@@ -86,8 +86,39 @@ export class TaskPage implements OnInit {
 
 
 //Complete Task
-submit(){
-  console.log("ok")
+async submit(){
+
+  let json = {
+    "variables" : {
+      "valid": {
+      "type": "Boolean",
+      "value": "False",
+      "valueInfo": {}
+  }
+  }
+  }
+  
+  /*Object.entries(this.form.value).forEach( ([key,value])=> {
+    console.log(value)
+    if(value != ''){
+      console.log("a")
+    let input = {"value" : value}
+    json.variables[key] = input}
+  });*/
+
+  console.log(json)
+
+  this.taskService.submitForm(this.username,this.password,this.task_id,json).subscribe(
+    (res) => {
+      this.showAlertSubmitY()
+      this.router.navigate([`home`]);
+    },
+    err => {
+      console.log(err.status);
+      this.showAlertSubmitN()
+    }
+  )
+
 }
 
 
@@ -101,13 +132,13 @@ submit(){
   this.taskService.claimTask(this.username,this.password,this.task_id,json).subscribe(
     (res) => {
       this.showAlertY()
+      this.router.navigate([`home`]);
     },
     err => {
       console.log(err.status);
       this.showAlertN()
     }
   )
-  this.router.navigate([`home`]);
 }
 
 //Unclaim Task method
@@ -120,13 +151,13 @@ async unclaim(){
 this.taskService.unclaimTask(this.username,this.password,this.task_id,json).subscribe(
   (res) => {
     this.showAlertUnclaimY()
+    this.router.navigate([`home`]);
   },
   err => {
     console.log(err.status);
     this.showAlertUnclaimN()
   }
 )
-this.router.navigate([`home`]);
 }
 
 
@@ -173,7 +204,33 @@ async showAlertUnclaimN() {
   const alert = await this.alertController.create({
     header: 'ERROR',
     subHeader: '',
-    message: 'The Task was not Unlaimed',
+    message: 'The Task was not Unclaimed',
+    buttons: ['OK']
+  });
+
+  await alert.present();
+}
+
+
+//Alerts For Submit
+//YES
+async showAlertSubmitY() {
+  const alert = await this.alertController.create({
+    header: 'Task Completed Successfully',
+    subHeader: '',
+    message: 'Thank you for completing the task',
+    buttons: ['OK']
+  });
+
+  await alert.present();
+}
+
+//NO
+async showAlertSubmitN() {
+  const alert = await this.alertController.create({
+    header: 'ERROR',
+    subHeader: '',
+    message: 'The Task was not completed',
     buttons: ['OK']
   });
 
