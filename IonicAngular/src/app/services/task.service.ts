@@ -34,7 +34,7 @@ export class TaskService {
 
     public getTasks(username : string, password : string) : Observable<any>
     {
-      return this.http.get<any>(`${baseUrl}/task`,this.header(username,password))
+      return this.http.get<any>(`${baseUrl}/task?sortBy=created&sortOrder=desc`,this.header(username,password))
     }
     
     public getTasksCount(username : string, password : string) : Observable<any>
@@ -44,17 +44,17 @@ export class TaskService {
 
     public getTasksUnassigned(username : string, password : string) : Observable<any>
     {
-      return this.http.get<any>(`${baseUrl}/task?unassigned=true`,this.header(username,password))
+      return this.http.get<any>(`${baseUrl}/task?unassigned=true&sortBy=created&sortOrder=desc&candidateUser=${username}`,this.header(username,password))
     }
 
     public getTasksUnassignedCount(username : string, password : string) : Observable<any>
     {
-      return this.http.get<any>(`${baseUrl}/task/count?unassigned=true`,this.header(username,password))
+      return this.http.get<any>(`${baseUrl}/task/count?unassigned=true&candidateUser=${username}`,this.header(username,password))
     }
 
     public getTasksAssigned(username : string, password : string) : Observable<any>
     {
-      return this.http.get<any>(`${baseUrl}/task?assignee=${username}`,this.header(username,password))
+      return this.http.get<any>(`${baseUrl}/task?assignee=${username}&sortBy=created&sortOrder=desc`,this.header(username,password))
     }
 
     public getTasksAssignedCount(username : string, password : string) : Observable<any>

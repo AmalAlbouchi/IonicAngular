@@ -33,7 +33,7 @@ export class LoginPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Login Unsuccessful',
       subHeader: 'Wrong Credentials',
-      message: 'Please Input Correct Credentials',
+      message: 'Please try again',
       buttons: ['OK']
     });
 

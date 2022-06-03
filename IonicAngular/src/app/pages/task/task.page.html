@@ -1,19 +1,27 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>task</ion-title>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{task?.name}}</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar color="dark" *ngIf="process?.name">
+    <ion-title>{{process?.name}}</ion-title>  
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  
-  <h3 id="processName">
-    {{task?.name}}
-  </h3>
 
-  <form [formGroup]="form">
-    <ion-item *ngFor="let input of variables" lines="full">
-      <ion-label position="floating">{{input.name}}</ion-label>
-      <ion-input [formControlName]="input.name" *ngIf="input.type!='Boolean'" type="input.type" required>{{input.value}}</ion-input>
+<ion-content style="--padding-top: 5%; --padding-start: 15%; --padding-end: 15%"
+class="ion-text-center">
+  <ion-chip outline="True" color="secondary" style="margin-bottom: 7%;">
+    <ion-label color="secondary" >Created : {{date}}</ion-label>
+  </ion-chip>
+
+  <form [formGroup]="form" style="margin-bottom: 20%;">
+    <ion-item *ngFor="let input of variables.slice().reverse()" lines="full">
+      <ion-label position="stacked">{{input.name}}</ion-label>
+      <ion-input [formControlName]="input.name" *ngIf="input.type!='Boolean'" type="input.type" required value="input.value">{{input.value}}</ion-input>
       <ion-checkbox [formControlName]="input.name" *ngIf="input.type=='Boolean'" color="primary"></ion-checkbox>
     </ion-item>
     <!--for string input>
@@ -30,6 +38,7 @@
       <ion-label position="floating" >{{input.name}}</ion-label>
       <ion-checkbox color="primary"></ion-checkbox>
     </ion-item></div></div-->
+    <br>
     <ion-button type="submit" expand="block" color="secondary" (click)="submit()" *ngIf="status == 'assigned'">Submit</ion-button>
     <ion-button type="submit" expand="block" color="danger" (click)="unclaim()" *ngIf="status == 'assigned'">Unclaim</ion-button>
     <ion-button type="submit" expand="block" color="secondary" (click)="claim()" *ngIf="status != 'assigned'">Claim</ion-button>

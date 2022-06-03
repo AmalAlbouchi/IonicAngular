@@ -90,11 +90,12 @@ export class ProcessPage implements OnInit {
 
     this.processService.submitForm(username,password,process_id,json).subscribe(
       (res) => {
-        this.showAlertY()
+        this.showAlert('Request Submitted Successfully','Thank you for submitting your request')
+        this.router.navigate(['home']);
       },
       err => {
         console.log(err.status);
-        this.showAlertN()
+        this.showAlert('ERROR','The request was not submitted')
       }
     )
 
@@ -104,25 +105,15 @@ export class ProcessPage implements OnInit {
 
 
 
-  async showAlertY() {
+  async showAlert(a,b) {
     const alert = await this.alertController.create({
-      header: 'Request Submitted Successfully',
+      header: a,
       subHeader: '',
-      message: 'Thank you for submitting your request',
+      message: b,
       buttons: ['OK']
     });
 
     await alert.present();
   }
 
-  async showAlertN() {
-    const alert = await this.alertController.create({
-      header: 'ERROR',
-      subHeader: '',
-      message: 'The request was not submitted',
-      buttons: ['OK']
-    });
-
-    await alert.present();
-  }
 }

@@ -1,14 +1,17 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>process</ion-title>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{process?.name}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
 
-  <h3 id="processName">
-    {{process?.name}}
-  </h3>
+
+
+<ion-content style="--padding-top: 15%; --padding-start: 15%; --padding-end: 15%"
+class="ion-text-center">
 
   <form [formGroup]="form">
     <ion-item *ngFor="let input of variables" lines="full">
@@ -20,5 +23,4 @@
   </form>
 
 
-  
 </ion-content>

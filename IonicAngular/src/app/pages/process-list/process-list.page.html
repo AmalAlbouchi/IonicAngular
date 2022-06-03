@@ -1,17 +1,35 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>processList</ion-title>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Process List</ion-title>
   </ion-toolbar>
-  <ion-badge color="danger" style="float:right">{{count}}</ion-badge>
+
+  <ion-toolbar color="dark">
+    <ion-title>Available Processes</ion-title>  
+    <ion-badge color="tertiary" style="margin-right: 2%;" slot="end">{{count}}</ion-badge>
+  </ion-toolbar>
 </ion-header>
+
+<ion-content *ngIf="count == 0" 
+style="--padding-top: 40%;"
+class="ion-text-center">
+<ion-icon name="sad-outline" style="font-size: 50px"></ion-icon>
+<h3>No Available Processes</h3>
+</ion-content>
+
 
 <ion-content>
 
   
 <!-- List of Items -->
 <ion-list>
-  <ion-item *ngFor="let item of list" (click)="details(item.id)">
-    <ion-label>{{ item.name }}</ion-label>
+  <ion-item 
+  *ngFor="let item of list; index as indexOfelement;" 
+  (click)="details(item.id)">
+  <ion-badge color="light" style="margin-right: 2%;" slot="start">{{indexOfelement + 1}}</ion-badge> 
+    <ion-label style="margin-left: 3%;">{{ item.name }}</ion-label>
   </ion-item>
 </ion-list>
 

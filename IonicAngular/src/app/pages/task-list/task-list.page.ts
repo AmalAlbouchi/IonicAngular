@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProcessService } from 'src/app/services/process.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -22,6 +22,8 @@ export class TaskListPage implements OnInit {
   list = [];
   count : any;
   status : any;
+  subheader : any;
+
 
   async ngOnInit() {
       
@@ -29,6 +31,11 @@ export class TaskListPage implements OnInit {
     let password: string = await this.storageService.get('password');
     this.status = this.route.snapshot.paramMap.get('status');
     
+    if(this.status == 'assigned'){
+      this.subheader = 'My Tasks'
+    }else{
+      this.subheader = 'Unassigned Tasks'
+    }
     //ALL
 /*  this.taskService.getTasks(username,password).subscribe( (res) => {
     console.log('tasks',res)

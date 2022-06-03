@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { StorageService } from 'src/app/services/storage.service';
 import { TaskService } from 'src/app/services/task.service';
+import { ProcessService } from 'src/app/services/process.service';
 
 @Component({
   selector: 'app-task',
@@ -14,6 +15,7 @@ export class TaskPage implements OnInit {
 
   constructor(
     private taskService : TaskService,
+    private processService : ProcessService,
     private storageService : StorageService,
     private route : ActivatedRoute,
     private router : Router,
@@ -30,8 +32,10 @@ export class TaskPage implements OnInit {
   password : any;
   task_id : any;
   status : any;
+  process : any;
+  date : any;
 
-
+  
   async ngOnInit() {
 
     this.username = await this.storageService.get('currentUser');
@@ -43,6 +47,19 @@ export class TaskPage implements OnInit {
     this.taskService.getTask(this.username,this.password,this.task_id).subscribe(
       (res) => {
         this.task = res
+        this.date = res.created.substring(0, 10)
+              //#Process 
+                //Get Process
+                this.processService.getProcess(this.username,this.password,this.task.processDefinitionId).subscribe(
+                  (res) => {
+                    this.process = res
+                  },
+                  err => {
+                    console.log(err.status);
+                    console.log("non");
+                  }
+                )
+              //#endProcess
         console.log(this.task)
       },
       err => {
@@ -51,10 +68,14 @@ export class TaskPage implements OnInit {
       }
     )
 
+
+
+
     //Get Task Variables
     this.taskService.getTaskVariables(this.username,this.password,this.task_id).subscribe(
       (res) => {
         this.vars = res
+        console.log(res)
         this.create()
       },
       err => {
@@ -69,10 +90,12 @@ export class TaskPage implements OnInit {
   create(){
     Object.entries(this.vars).forEach(element => {
       this.form.addControl(element[0],new FormControl('', Validators.required));
-      if (element[1]['value']){
+      if(this.status=="unassigned"){
         this.form.controls[element[0]].disable();
+      }  
+      if(element[1]['type'] == 'Boolean'){
+        this.form.controls[element[0]].setValue(false)
       }
-      console.log(element[0],element[1]['type'], element[1]['value'])
 
       this.variables.push(
           { 
@@ -82,6 +105,7 @@ export class TaskPage implements OnInit {
           }
       );
   });
+  console.log(this.variables)
 }
 
 
@@ -89,22 +113,17 @@ export class TaskPage implements OnInit {
 async submit(){
 
   let json = {
-    "variables" : {
-      "valid": {
-      "type": "Boolean",
-      "value": "False",
-      "valueInfo": {}
-  }
-  }
-  }
+    "variables": {}
+}
   
-  /*Object.entries(this.form.value).forEach( ([key,value])=> {
-    console.log(value)
-    if(value != ''){
-      console.log("a")
+  Object.entries(this.form.value).forEach( ([key,value])=> {
+    console.log(key, value)
+
+    if (value){
     let input = {"value" : value}
     json.variables[key] = input}
-  });*/
+  });
+
 
   console.log(json)
 

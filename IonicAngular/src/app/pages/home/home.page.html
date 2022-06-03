@@ -1,14 +1,24 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-title>Welcome, {{username}}</ion-title>
+    <ion-button (click)="logout()" slot="end" color="danger" size="small" shape="round" style="margin-right: 2%;">
+      <ion-icon name="log-out-outline"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-button (click)="logout()">LOGOUT</ion-button>
-  <br>
-  <ion-button color="secondary" (click)="taskAssigned()">My Tasks</ion-button>
-  <ion-button color="secondary" (click)="taskUnassigned()">Unassigned Tasks</ion-button>
-  <ion-button color="secondary" (click)="process()">Available Processes</ion-button>
-
+<ion-content style="--padding-top: 40%;"
+class="ion-text-center">
+<ion-list class="ion-text-center" lines="none">
+  <ion-item>
+    <ion-icon color="tertiary" slot="start" name="chevron-forward-outline"></ion-icon>
+    <ion-button style="height: 40px; font-size: 15px;" color="tertiary" (click)="taskAssigned()">My Tasks</ion-button>
+  </ion-item><ion-item>
+    <ion-icon color="tertiary" slot="start" name="chevron-forward-outline"></ion-icon>
+    <ion-button style="height: 40px; font-size: 15px;" color="tertiary" (click)="taskUnassigned()">Unassigned Tasks</ion-button>
+  </ion-item><ion-item>
+    <ion-icon color="tertiary" slot="start" name="chevron-forward-outline"></ion-icon>
+    <ion-button style="height: 40px; font-size: 15px;" color="tertiary" (click)="process()">Available Processes</ion-button>
+  </ion-item>
+</ion-list>
 </ion-content>
